@@ -1,4 +1,5 @@
 import openai
+import os
 
 # Set the API keys
 openai.api_key = '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'
@@ -7,7 +8,7 @@ openai.api_key = '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'
 # Function to generate initial blog posts
 def draft_blog_post(topic, keywords, writer_type='general'):
     
-    with open('style.txt', 'r', encoding='utf8') as file:
+    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Inputs', 'style.txt')), 'r', encoding='utf8') as file:
         user_style = file.read()
     
     # Create a system message based on the type of writer

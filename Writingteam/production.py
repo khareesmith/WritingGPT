@@ -1,16 +1,17 @@
 import openai
+import os
 
 # Set the API key
 openai.api_key = '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'
 
 # Read the blog post draft from the file
-with open('blog_post_draft.txt', 'r') as f:
+with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
     draft = f.read()
-with open('editor_notes.txt', 'r') as f:
+with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'editor_notes.txt')), 'r') as f:
     editor_notes = f.read()
-with open('seo_notes.txt', 'r') as f:
+with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'seo_notes.txt')), 'r') as f:
     seo_notes = f.read()
-with open('photos.txt', 'r') as f:
+with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'photos.txt')), 'r') as f:
     photo_suggestions = f.read()
 
 def final_blog_post(draft, editor_notes, seo_notes, photo_suggestions):
