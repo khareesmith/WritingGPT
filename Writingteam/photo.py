@@ -2,7 +2,7 @@ import openai
 import os
 
 # Set the API key
-openai.api_key = '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'
+openai.api_key = ''
 
 # Read the blog post draft from the file
 with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:

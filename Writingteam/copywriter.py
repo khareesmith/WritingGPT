@@ -2,7 +2,7 @@ import openai
 import os
 
 # Set the API keys
-openai.api_key = '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'
+openai.api_key = ''
 
 
 # Function to generate initial blog posts
