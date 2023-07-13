@@ -29,7 +29,7 @@ def final_blog_post(draft, editor_notes, seo_notes, photo_suggestions):
 
     # Generate the suggestions using OpenAI
     response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
+      model="gpt-4",
       messages=conversation
     )
 

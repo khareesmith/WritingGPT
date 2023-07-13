@@ -20,7 +20,7 @@ def photo_suggestions(draft):
 
     # Generate the photo researcher's notes using OpenAI
     response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
+      model="gpt-4",
       messages=conversation
     )
 

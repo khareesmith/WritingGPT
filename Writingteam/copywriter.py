@@ -38,7 +38,7 @@ def draft_blog_post(topic, keywords, writer_type='general'):
 
     # Generate the blog post using OpenAI
     response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
+      model="gpt-4",
       messages=conversation
     )
 
