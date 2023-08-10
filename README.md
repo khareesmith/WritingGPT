@@ -32,6 +32,13 @@ This web application is a powerful tool that leverages the capabilities of OpenA
 git clone https://github.com/khareesmith/WritingGPT.git
 ```
 
+2. Add your API key from OpenAI. The API key will need to be added to every file in the "Writingteam" directory
+
+```
+openai.api_key = 'ENTER API KEY HERE'
+```
+
+
 2. In the main folder, run the program
 
 ```
