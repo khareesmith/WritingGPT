@@ -2,7 +2,7 @@
 
 ## Overview
 
-WritingGPT is a powerful web application that harnesses OpenAI's GPT-3.5 to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.
+WritingGPT is a powerful web application that harnesses OpenAI's GPT-4 to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.
 
 ## Features
 
