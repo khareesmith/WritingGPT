@@ -46,6 +46,6 @@ f = open(os.path.realpath(os.path.join(os.path.dirname(__file__), 'Outputs', 'fi
 f.write(final)
 
 # Print the Final Post
-print("Completed Blog Post: \n", final, "\n")
+print("BLOG POST COMPLETED \n")
 print("View the draft and all notes for this blog post in the 'Outputs' folder under: \n blog_post_draft.txt \n editor_notes.txt \n seo_notes.txt \n photos.txt \n final_blog_post.txt")
 

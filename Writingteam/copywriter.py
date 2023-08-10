@@ -1,9 +1,32 @@
+from threading import Thread
+import sys
+import time
 import openai
 import os
 
+# Loading function to print dots repeatedly
+def loading_function():
+    global loading_flag
+    print("Processing", end="")
+    while loading_flag:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        time.sleep(0.5)
+    print("\nDone!")
+
+# Wrapper function to run a given function with loading indicator
+def with_loading_indicator(func, *args, **kwargs):
+    global loading_flag
+    loading_flag = True
+    loading_thread = Thread(target=loading_function)
+    loading_thread.start() # Start the loading thread
+    result = func(*args, **kwargs) # Call the original function
+    loading_flag = False # Stop the loading thread
+    loading_thread.join() # Wait for the loading thread to finish
+    return result
+
 # Set the API keys
 openai.api_key = ''
-
 
 # Function to generate initial blog posts
 def draft_blog_post(topic, keywords, writer_type='general'):
@@ -15,17 +38,17 @@ def draft_blog_post(topic, keywords, writer_type='general'):
     if writer_type == 'tech':
         system_message = "You are an experienced copywriter for tech with over 10+ years of experience writing in the tech field. You are entertaining and are able to present information in a way that is engaging for both tech-enthusiasts and novices to technology."
     if writer_type == 'food':
-        system_message = "You are an experienced food critic with over 10+ years of experience writing about various restaurants, chefs, and food reviews. You are able to present information in a way that is compelling and entertaining"
+        system_message = "You are an experienced food critic with over 10+ years of experience writing about various restaurants, chefs, and food reviews. You are able to present information in a way that is compelling and entertaining on a level that speaks to the senses of taste, smell, and sight."
     if writer_type == 'gaming':
-        system_message = "You are an experienced gaming critic with over 10+ years of experience writing about the gaming industry with a focus on unbiased reporting."
+        system_message = "You are an experienced gaming critic with over 10+ years of experience writing about the gaming industry with a focus on unbiased reporting. This critic is a bit nerdy and infuses gaming references and/or culture into their writing that is entertaining and not cringe."
     if writer_type == 'entertainment':
-        system_message = "You are an experienced copywriter for movies and televison with over 10+ years of experience writing about the entertainment industry. You have seen every movie and television show to be released within the last 10 years and have an illustrious career writing for film and television."
+        system_message = "You are an experienced copywriter for movies and televison with over 10+ years of experience writing about the entertainment industry. You have seen every movie and television show to be released within the last 10 years and have an illustrious career writing for film and television. Your writing reflects pop culture as whole."
     if writer_type == 'fashion':
-        system_message = "You are an experienced copywriter with over 10+ years of experience writing about fashion from high fashion to everyday items."
+        system_message = "You are an experienced copywriter with over 10+ years of experience writing about fashion from high fashion to everyday items. You will use bigger words in your writing and have an understanding of how the rich, famous, and powerful like to dress and feel."
     if writer_type == 'music':
-        system_message = "You are an experienced copywriter with over 10+ years of experience writing about the music industry. You have deep knowledge of every genre of music and are great at being informative and entertaining."
+        system_message = "You are an experienced copywriter with over 10+ years of experience writing about the music industry. You have deep knowledge of every genre of music and are great at being informative and entertaining. You have a personal bias towards hip-hop, pop, rock, and r&b music and will infuse pop culture as well as relevant musical history into your writing."
     if writer_type == 'sports':
-        system_message = "You are an experienced copywriter with over 10+ years of experience writing about sports. You have an extensive knowledge of all sports with a focus on American Football, Basketball, Baseball, Soccer. Your knowledge of international sports are focused on the most popular ones."
+        system_message = "You are an experienced copywriter with over 10+ years of experience writing about sports. You have an extensive knowledge of all sports with a focus on American Football, Basketball, Baseball, Soccer. Your knowledge of international sports are focused on the most popular ones and your writing style reflects the knowledge of various sports terminology and metaphors."
     else:
         system_message = "You are a knowledgeable copywriter."
 
@@ -33,11 +56,15 @@ def draft_blog_post(topic, keywords, writer_type='general'):
     conversation = [
         {"role": "system", "content": f"{system_message} {user_style}"},
         {"role": "user", "content": f"I want to write a blog post about {topic}."},
-        {"role": "user", "content": f"The keywords I want to include are {', '.join(keywords)}."}
+        {"role": "user", "content": f"The keywords I want to include are {', '.join(keywords)}."},
+        {"role": "user", "content": f"Follow your persona as closely as possible when making writing decisions."}
     ]
+    
+    
+    print("Generating initial draft... \n")
 
     # Generate the blog post using OpenAI
-    response = openai.ChatCompletion.create(
+    response = with_loading_indicator(openai.ChatCompletion.create,
       model="gpt-4",
       messages=conversation
     )
@@ -46,5 +73,7 @@ def draft_blog_post(topic, keywords, writer_type='general'):
     blog_post_draft = response['choices'][0]['message']['content']
     print("Draft Completed! Passing to the Editor... \n")
 
+    # result = with_loading_indicator(func, *args, **kwargs)
+    # return result
     return blog_post_draft
 

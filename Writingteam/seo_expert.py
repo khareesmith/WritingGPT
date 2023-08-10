@@ -1,3 +1,27 @@
+from threading import Thread
+import sys
+import time
+
+# Loading function to print dots repeatedly
+def loading_function():
+    global loading_flag
+    print("Processing", end="")
+    while loading_flag:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        time.sleep(0.5)
+    print("\nDone!")
+
+# Wrapper function to run a given function with loading indicator
+def with_loading_indicator(func, *args, **kwargs):
+    global loading_flag
+    loading_flag = True
+    loading_thread = Thread(target=loading_function)
+    loading_thread.start() # Start the loading thread
+    result = func(*args, **kwargs) # Call the original function
+    loading_flag = False # Stop the loading thread
+    loading_thread.join() # Wait for the loading thread to finish
+    return result
 import openai
 import os
 
@@ -17,9 +41,11 @@ def seo_notes(draft):
         {"role": "system", "content": system_message},
         {"role": "user", "content": f"Please review the following blog post and provide notes to improve ranking in search engines: {draft}"}
     ]
+    
+    print("Generating notes for SEO. \n")
 
     # Generate the SEO's notes using OpenAI
-    response = openai.ChatCompletion.create(
+    response = with_loading_indicator(openai.ChatCompletion.create,
       model="gpt-4",
       messages=conversation
     )

@@ -1,5 +1,30 @@
+from threading import Thread
+import sys
+import time
 import openai
 import os
+
+# Loading function to print dots repeatedly
+def loading_function():
+    global loading_flag
+    print("Processing", end="")
+    while loading_flag:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        time.sleep(0.5)
+    print("\nDone!")
+
+# Wrapper function to run a given function with loading indicator
+def with_loading_indicator(func, *args, **kwargs):
+    global loading_flag
+    loading_flag = True
+    loading_thread = Thread(target=loading_function)
+    loading_thread.start() # Start the loading thread
+    result = func(*args, **kwargs) # Call the original function
+    loading_flag = False # Stop the loading thread
+    loading_thread.join() # Wait for the loading thread to finish
+    return result
+
 
 # Set the API key
 openai.api_key = ''
@@ -13,30 +38,33 @@ def edit_blog_post(draft, editor_type='general'):
     
     # Create a system message based on the type of editor
     if editor_type == 'tech':
-        system_message = "You are an experienced editor for a tech publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a tech publication with over 10+ years of experience. You have an understanding of technology from a technical, emotional, and social/cultural standpoint."
     if editor_type == 'food':
-        system_message = "You are an experienced editor for a food publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a food publication with over 10+ years of experience. You have an ability to guide readers on a journey through the wonders of food and cuisine with an deep understanding from easy to make comfort foods to pricey fine dining."
     if editor_type == 'music':
-        system_message = "You are an experienced editor for a music publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a music publication with over 10+ years of experience. You have worked with many artists and companies and understand the importance of presenting your clients in a favorable light."
     if editor_type == 'fashion':
-        system_message = "You are an experienced editor for a fashion publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a fashion publication with over 10+ years of experience. You have been around the world to various fashion shows and events, but also understand the layman side of what makes fashion for the everyday person."
     if editor_type == 'entertainment':
-        system_message = "You are an experienced editor for a film and television publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a film and television publication with over 10+ years of experience. You have a deep understanding of the last 50+ years of pop culture and entertainment history and love to keep your publications light and entertaining."
     if editor_type == 'sports':
-        system_message = "You are an experienced editor for a sports publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a sports publication with over 10+ years of experience. You have seen a lot of legends play in the sports world, from various sports, and you know how to create publications that put them in an inspirational and entertaining light."
     if editor_type == 'gaming':
-        system_message = "You are an experienced editor for a sports publication with over 10+ years of experience."
+        system_message = "You are an experienced editor for a gaming publication with over 10+ years of experience. You have reviewed many games, consoles, and events in the past and are somewhat of a nerd that knows how to be entertaining."
     else:
         system_message = "You are a skilled editor."
 
     # Construct a conversation with the system message and the blog post draft
     conversation = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"Please review the following blog post and provide suggestions for improvement: {draft}"}
+        {"role": "user", "content": f"Please review the following blog post and provide suggestions for improvement: {draft}. Please provide only the notes/suggestions and DO NOT repeat the article."},
+        {"role": "user", "content": f"Use your persona to influence your editing decisions."}
     ]
+    
+    print("Generating notes from the Editor... \n")
 
     # Generate the suggestions using OpenAI
-    response = openai.ChatCompletion.create(
+    response = with_loading_indicator(openai.ChatCompletion.create,
       model="gpt-4",
       messages=conversation
     )

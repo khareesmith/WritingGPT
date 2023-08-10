@@ -1,5 +1,30 @@
+from threading import Thread
+import sys
+import time
 import openai
 import os
+
+# Loading function to print dots repeatedly
+def loading_function():
+    global loading_flag
+    print("Processing", end="")
+    while loading_flag:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        time.sleep(0.5)
+    print("\nDone!")
+
+# Wrapper function to run a given function with loading indicator
+def with_loading_indicator(func, *args, **kwargs):
+    global loading_flag
+    loading_flag = True
+    loading_thread = Thread(target=loading_function)
+    loading_thread.start() # Start the loading thread
+    result = func(*args, **kwargs) # Call the original function
+    loading_flag = False # Stop the loading thread
+    loading_thread.join() # Wait for the loading thread to finish
+    return result
+
 
 # Set the API key
 openai.api_key = ''
@@ -10,16 +35,18 @@ with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Output
 
 def photo_suggestions(draft):
     
-    system_message = "You are an experienced photographer and understand the intracacies of composition, exposure, focusing, depth of field and other concepts to create engaging images"
+    system_message = "You are an experienced photographer and understand the intracacies of composition, exposure, focusing, depth of field and other concepts to create engaging images."
 
     # Construct a conversation with the system message and the blog post draft
     conversation = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"Please review the following blog post and provide image suggestions for any relevant content: {draft}"}
+        {"role": "user", "content": f"Please review the following blog post and provide image suggestions for any relevant content: {draft}. Please include where the image should likely go within the blog post and keywords to search when looking for an image."}
     ]
+    
+    print("Generating photos to be included... \n")
 
     # Generate the photo researcher's notes using OpenAI
-    response = openai.ChatCompletion.create(
+    response = with_loading_indicator(openai.ChatCompletion.create,
       model="gpt-4",
       messages=conversation
     )

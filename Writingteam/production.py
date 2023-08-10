@@ -1,3 +1,27 @@
+from threading import Thread
+import sys
+import time
+
+# Loading function to print dots repeatedly
+def loading_function():
+    global loading_flag
+    print("Processing", end="")
+    while loading_flag:
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        time.sleep(0.5)
+    print("\nDone!")
+
+# Wrapper function to run a given function with loading indicator
+def with_loading_indicator(func, *args, **kwargs):
+    global loading_flag
+    loading_flag = True
+    loading_thread = Thread(target=loading_function)
+    loading_thread.start() # Start the loading thread
+    result = func(*args, **kwargs) # Call the original function
+    loading_flag = False # Stop the loading thread
+    loading_thread.join() # Wait for the loading thread to finish
+    return result
 import openai
 import os
 
@@ -21,14 +45,16 @@ def final_blog_post(draft, editor_notes, seo_notes, photo_suggestions):
     # Construct a conversation with the system message and the blog post draft, editor notes, SEO notes, and photo suggestions
     conversation = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"Please review the following draft blog post and create a final blog post utilizing all information: {draft}"},
-        {"role": "user", "content": f"Use these notes from the Editor: {editor_notes}"},
-        {"role": "user", "content": f"Use these notes from the SEO Exprt: {seo_notes}"},
-        {"role": "user", "content": f"Use these notes from the Photo Researcher: {photo_suggestions}"}
+        {"role": "user", "content": f"Please review the following draft blog post and create a final blog post utilizing all given information. This is the first draft: {draft}"},
+        {"role": "user", "content": f"Use these notes from the Editor: {editor_notes}. Try to incorporate all notes that better the post as a whole."},
+        {"role": "user", "content": f"Use these notes from the SEO Exprt: {seo_notes}. Make changes to the post as necessary to fit SEO requirements."},
+        {"role": "user", "content": f"Use these notes from the Photo Researcher: {photo_suggestions}. If possible, include where each photo should be placed within the final post after the sentence or paragraph that it is relevant for."}
     ]
+    
+    print("Generating Final Blog Post... \n")
 
     # Generate the suggestions using OpenAI
-    response = openai.ChatCompletion.create(
+    response = with_loading_indicator(openai.ChatCompletion.create,
       model="gpt-4",
       messages=conversation
     )
