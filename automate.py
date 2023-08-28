@@ -1,8 +1,8 @@
 import subprocess
 from tqdm import tqdm
 
-inputs = "A review of Mcdonalds\nfast food, healthy vs unhealthy, cheap\nmusic\nsports"
-num_runs = 25
+inputs = ""
+num_runs = 1
 script_name = "main.py"
 
 # The tqdm function takes an iterable and returns an iterator that updates the progress bar each time a value is requested.
