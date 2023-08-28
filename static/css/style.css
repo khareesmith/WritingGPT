@@ -10,3 +10,8 @@ h1 {
 #mainsub {
     margin: 1rem 0 0;
 }
+
+.card {
+    padding: 0 2rem 3rem;
+    margin: 0 0 4rem;
+}
