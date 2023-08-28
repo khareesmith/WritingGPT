@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>WritingGPT</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>🤖 WritingGPT: The A.I. Generated Writing Team 🤖</h1>
+
+    <p class="desc">WritingGPT is a powerful web application that harnesses OpenAI's GPT-4 to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.</p>
+
+    <form>
+        <div class="form-group">
+            <label for="posttopic">Topic</label>
+            <input type="text" class="form-control" id="posttopic" aria-describedby="topicHelp">
+            <small id="topicHelp" class="form-text text-muted">Input the topic of the blog post/article above.</small>
+        </div>
+        <div class="form-group">
+            <label for="postkeywords">Keywords</label>
+            <input type="text" class="form-control" id="postkeywords" aria-describedby="keyHelp">
+            <small id="keyHelp" class="form-text text-muted">Input the keywords to influence the post, separated by commas.</small>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="generalType" value="general" checked>
+            <label class="form-check-label" for="generalType">
+                ✍️ General (Versatile)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="techType" value="tech">
+            <label class="form-check-label" for="techType">
+                🖥️ Tech (Perfect for tech-savvy topics)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="gamingType" value="gaming">
+            <label class="form-check-label" for="gamingType">
+                🎮 Gaming (For gaming culture)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="musicType" value="music">
+            <label class="form-check-label" for="musicType">
+                🎵 Music (Artists, genres, and more)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="entertainmentType" value="entertainment">
+            <label class="form-check-label" for="entertainmentType">
+                🎥 Entertainment (Movies, TV, pop culture)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="fashionType" value="fashion">
+            <label class="form-check-label" for="fashionType">
+                👠 Fashion (High fashion to everyday clothing)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="writerTypeRadio" id="sportsType" value="sports">
+            <label class="form-check-label" for="sportsType">
+                🏈 Sports (American and International sports)
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="mainsub">Submit</button>
+    </form>
+</div>
+{% endblock %}
