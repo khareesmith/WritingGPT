@@ -67,9 +67,6 @@ The WritingGPT application allows you to explore creative combinations and uniqu
 
 You can even pair different writer and editor types to craft unique articles. A Gaming writer and a Tech editor for a cutting-edge game review? Why not! Enter "avail_types" to see all available options.
 
-3. **Editing Phase**: Choose an editor to review the initial draft.
-4. **Finalization**: The program will compile the final blog post within the "Outputs" folder.
-
 ## Contributing
 
 Contributions are welcome! 🧠💡
