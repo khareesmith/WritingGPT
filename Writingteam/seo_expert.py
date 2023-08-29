@@ -1,12 +1,16 @@
 import openai
-import os
+from pathlib import Path
 
 def seo_notes(draft, keywords):
+    
+    current_directory = Path.cwd()
+    relative_path = Path("Outputs/blog_post_draft.txt")
+    absolute_path = current_directory / relative_path
     
     openai.api_key = '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'
     
     # Read the blog post draft from the file
-    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
+    with open(absolute_path, 'r') as f:
         draft = f.read()
     
     system_message = "You are an experienced SEO Specialist that understands the ins and outs and intricacies of organic search to get websites and webpages to rank well."

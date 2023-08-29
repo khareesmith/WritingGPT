@@ -1,17 +1,28 @@
 import openai
-import os
+from pathlib import Path
 
 def final_blog_post(draft, editor_notes, seo_notes, photo_suggestions):
     
+    current_directory = Path.cwd()
+    draft_relative_path = Path("Outputs/blog_post_draft.txt")
+    edit_relative_path = Path("Outputs/editor_notes.txt")
+    seo_relative_path = Path("Outputs/seo_notes.txt")
+    photo_relative_path = Path("Outputs/photos.txt")
+    
+    draft_absolute_path = current_directory / draft_relative_path
+    edit_absolute_path = current_directory / edit_relative_path
+    seo_absolute_path = current_directory / seo_relative_path
+    photo_absolute_path = current_directory / photo_relative_path
+    
     openai.api_key = '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'
     
-    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
+    with open(draft_absolute_path, 'r') as f:
         draft = f.read()
-    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'editor_notes.txt')), 'r') as f:
+    with open(edit_absolute_path, 'r') as f:
         editor_notes = f.read()
-    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'seo_notes.txt')), 'r') as f:
+    with open(seo_absolute_path, 'r') as f:
         seo_notes = f.read()
-    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'photos.txt')), 'r') as f:
+    with open(photo_absolute_path, 'r') as f:
         photo_suggestions = f.read()
     
     system_message = "You are a skilled production editor that manages content production for a publication. You have over 10+ years of experience with proofreading, copyediting, extensive formatting checks, and more."
