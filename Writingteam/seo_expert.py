@@ -39,14 +39,14 @@ def seo_notes(draft):
     # Construct a conversation with the system message and the blog post draft
     conversation = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"Please review the following blog post and provide notes to improve ranking in search engines: {draft}"}
+        {"role": "user", "content": f"Please review the following blog post and provide notes to improve ranking in search engines: {draft}. Please provide suggestions to improve the content itself and not general tips for better SEO."}
     ]
     
     print("Generating notes for SEO. \n")
 
     # Generate the SEO's notes using OpenAI
     response = with_loading_indicator(openai.ChatCompletion.create,
-      model="gpt-4",
+      model="gpt-3.5-turbo",
       messages=conversation
     )
 
