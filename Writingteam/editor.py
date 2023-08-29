@@ -4,37 +4,16 @@ import time
 import openai
 import os
 
-# Loading function to print dots repeatedly
-def loading_function():
-    global loading_flag
-    print("Processing", end="")
-    while loading_flag:
-        sys.stdout.write(".")
-        sys.stdout.flush()
-        time.sleep(0.5)
-    print("\nDone!")
-
-# Wrapper function to run a given function with loading indicator
-def with_loading_indicator(func, *args, **kwargs):
-    global loading_flag
-    loading_flag = True
-    loading_thread = Thread(target=loading_function)
-    loading_thread.start() # Start the loading thread
-    result = func(*args, **kwargs) # Call the original function
-    loading_flag = False # Stop the loading thread
-    loading_thread.join() # Wait for the loading thread to finish
-    return result
-
-
-# Set the API key
-openai.api_key = ''
-
 # Read the blog post draft from the file
-with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
-    draft = f.read()
 
 
-def edit_blog_post(draft, editor_type='general'):
+def edit_blog_post(draft, editor_type):
+    
+    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
+        draft = f.read()
+        print(draft)
+
+    openai.api_key = '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'
     
     # Create a system message based on the type of editor
     if editor_type == 'tech':
@@ -57,15 +36,15 @@ def edit_blog_post(draft, editor_type='general'):
     # Construct a conversation with the system message and the blog post draft
     conversation = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"Please review the following blog post and provide suggestions for improvement: {draft}. Please provide only the notes/suggestions and DO NOT repeat the article."},
-        {"role": "user", "content": f"Use your persona to influence your editing decisions."}
+        {"role": "user", "content": f"Please review the following blog post and provide suggestions for improvement: {draft}. Please provide only the notes/suggestions and DO NOT repeat the blog post or article. You can reference sections, but do not repeat what is written in the draft."},
+        {"role": "user", "content": f"DO NOT say things like 'as X persona..' or 'as an editor for x..'"}
     ]
     
     print("Generating notes from the Editor... \n")
 
     # Generate the suggestions using OpenAI
-    response = with_loading_indicator(openai.ChatCompletion.create,
-      model="gpt-4",
+    response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
       messages=conversation
     )
 
