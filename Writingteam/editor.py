@@ -1,6 +1,3 @@
-from threading import Thread
-import sys
-import time
 import openai
 import os
 
@@ -49,7 +46,7 @@ def edit_blog_post(draft, editor_type):
 
     # Generate the suggestions using OpenAI
     response = openai.ChatCompletion.create(
-      model="gpt-4",
+      model="gpt-3.5-turbo",
       messages=conversation,
       temperature=0.3
     )

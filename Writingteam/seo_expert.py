@@ -1,51 +1,27 @@
-from threading import Thread
-import sys
-import time
-
-# Loading function to print dots repeatedly
-def loading_function():
-    global loading_flag
-    print("Processing", end="")
-    while loading_flag:
-        sys.stdout.write(".")
-        sys.stdout.flush()
-        time.sleep(0.5)
-    print("\nDone!")
-
-# Wrapper function to run a given function with loading indicator
-def with_loading_indicator(func, *args, **kwargs):
-    global loading_flag
-    loading_flag = True
-    loading_thread = Thread(target=loading_function)
-    loading_thread.start() # Start the loading thread
-    result = func(*args, **kwargs) # Call the original function
-    loading_flag = False # Stop the loading thread
-    loading_thread.join() # Wait for the loading thread to finish
-    return result
 import openai
 import os
 
-# Set the API key
-openai.api_key = ''
-
-# Read the blog post draft from the file
-with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
-    draft = f.read()
-
-def seo_notes(draft):
+def seo_notes(draft, keywords):
+    
+    openai.api_key = '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'
+    
+    # Read the blog post draft from the file
+    with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Outputs', 'blog_post_draft.txt')), 'r') as f:
+        draft = f.read()
     
     system_message = "You are an experienced SEO Specialist that understands the ins and outs and intricacies of organic search to get websites and webpages to rank well."
 
     # Construct a conversation with the system message and the blog post draft
     conversation = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"Please review the following blog post and provide notes to improve ranking in search engines: {draft}. Please provide suggestions to improve the content itself and not general tips for better SEO."}
+        {"role": "user", "content": f"Please review the following blog post and provide notes to improve ranking in search engines: {draft}. Please provide suggestions to improve the content itself and not general tips for better SEO."},
+        {"role": "system", "content": f"These keywords (separted by commas) were asked to be included{': '.join(keywords)}. Take these into consideration, but you are the expert on what is relavent to use or not. Suggestions for better use of keywords are good, but not 100% necessary for your notes."}
     ]
     
     print("Generating notes for SEO. \n")
 
     # Generate the SEO's notes using OpenAI
-    response = with_loading_indicator(openai.ChatCompletion.create,
+    response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=conversation
     )

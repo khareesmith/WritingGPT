@@ -1,32 +1,5 @@
-# from threading import Thread
-# import sys
-# import time
 import openai
-import os
-
-# Loading function to print dots repeatedly
-# def loading_function():
-    # global loading_flag
-    # print("Processing", end="")
-    # while loading_flag:
-        # sys.stdout.write(".")
-        # sys.stdout.flush()
-        # time.sleep(0.5)
-    # print("\nDone!")
-
-# Wrapper function to run a given function with loading indicator
-# def with_loading_indicator(func, *args, **kwargs):
-    # global loading_flag
-    # loading_flag = True
-    # loading_thread = Thread(target=loading_function)
-    # loading_thread.start() # Start the loading thread
-    # result = func(*args, **kwargs) # Call the original function
-    # loading_flag = False # Stop the loading thread
-    # loading_thread.join() # Wait for the loading thread to finish
-    # return result
-
-# Set the API keys
-
+# import os
 
 # Function to generate initial blog posts
 def draft_blog_post(writerType, topic, keywords):
@@ -34,9 +7,7 @@ def draft_blog_post(writerType, topic, keywords):
     
     # with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Inputs', 'style.txt')), 'r', encoding='utf8') as file:
         # user_style = file.read()
-    
-    # Remove whitespace and make lowercase
-    # writerType.strip().lower()
+
     # Create a system message based on the type of writer
     if writerType == 'tech':
         system_message = "You are an experienced copywriter for tech with over 10+ years of experience writing in the tech field. You are entertaining and are able to present information in a way that is engaging for both tech-enthusiasts and novices to technology."
@@ -75,7 +46,7 @@ def draft_blog_post(writerType, topic, keywords):
 
     # Generate the blog post using OpenAI
     response = openai.ChatCompletion.create(
-      model="gpt-4",
+      model="gpt-3.5-turbo",
       messages=conversation,
       temperature=0.7
     )
@@ -84,6 +55,5 @@ def draft_blog_post(writerType, topic, keywords):
     blog_post_draft = response['choices'][0]['message']['content']
     print("Draft Completed! Passing to the Editor... \n")
 
-    # result = with_loading_indicator(func, *args, **kwargs)
     # return result
     return blog_post_draft
