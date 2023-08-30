@@ -1,16 +1,35 @@
 import openai
+import os, sys, json
 from pathlib import Path
 
 def photo_suggestions(draft):
     
-    current_directory = Path.cwd()
-    relative_path = Path("Outputs/blog_post_draft.txt")
-    absolute_path = current_directory / relative_path
+    p = Path(os.path.dirname(__file__))
+    parent_folder = p.parent
     
-    with open(absolute_path, 'r') as f:
+    with open(os.path.join(parent_folder, 'config.json'), 'r') as f:
+        config = json.load(f)
+    
+    API_KEY = config['API_KEY']
+    openai.api_key = API_KEY
+    
+    if getattr(sys, 'frozen', False):
+    # The application is running as a bundled executable
+        app_path = sys.executable
+        p = Path(app_path).parents[1]
+        
+    else:
+    # The application is running as a standard Python script
+        app_path = os.path.dirname(os.path.abspath(__file__))
+        p = Path(app_path).parents[0]
+
+    # Now application_path will always point to the folder containing your application,
+    # whether it's running as a script or as a bundled executable.
+    application_path = p.joinpath('Outputs/')
+    file_path = os.path.join(application_path, 'blog_post_draft.txt')
+    
+    with open(file_path, 'r') as f:
         draft = f.read()
-    
-    openai.api_key = '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'
     
     system_message = "You are an experienced photographer and understand the intracacies of composition, exposure, focusing, depth of field and other concepts to create engaging images."
 

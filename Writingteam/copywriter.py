@@ -1,9 +1,18 @@
+from pathlib import Path
 import openai
-# import os
+import os, json
 
 # Function to generate initial blog posts
 def draft_blog_post(writerType, topic, keywords):
-    openai.api_key = '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'
+    
+    p = Path(os.path.dirname(__file__))
+    parent_folder = p.parent
+    
+    with open(os.path.join(parent_folder, 'config.json'), 'r') as f:
+        config = json.load(f)
+    
+    API_KEY = config['API_KEY']
+    openai.api_key = API_KEY
     
     # with open(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'Inputs', 'style.txt')), 'r', encoding='utf8') as file:
         # user_style = file.read()

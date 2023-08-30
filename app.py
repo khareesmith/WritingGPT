@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from Writingteam import draft_blog_post, edit_blog_post, seo_notes, photo_suggestions, final_blog_post
-
-import Inputs
 import os
+import sys
+from pathlib import Path
 
 app = Flask(__name__)
 
@@ -14,7 +14,21 @@ def draft():
     keywords = data.get('keywords', [])
         
     draft_output = draft_blog_post(writerType, topic, keywords)
-    f = open(os.path.realpath(os.path.join(os.path.dirname(__file__), 'Outputs', 'blog_post_draft.txt')), 'w')
+    
+    if getattr(sys, 'frozen', False):
+    # The application is running as a bundled executable
+        app_path = sys.executable
+        p = Path(app_path).parents[1]
+        
+    else:
+        # The application is running as a standard Python script
+        app_path = os.path.dirname(os.path.abspath(__file__))
+        p = Path(app_path)
+        
+    application_path = p.joinpath('Outputs/')
+    draft_file_path = os.path.join(application_path, 'blog_post_draft.txt')
+    print('Writing draft to ' + draft_file_path)
+    f = open(draft_file_path, 'w')
     f.write(draft_output)
     f.flush()
         
@@ -26,7 +40,21 @@ def edit():
     editor_type = data.get('editor_type', '')
     draft_received = data.get('draft', '')
     editor_notes = edit_blog_post(draft_received, editor_type)
-    f = open(os.path.realpath(os.path.join(os.path.dirname(__file__), 'Outputs', 'editor_notes.txt')), 'w')
+    
+    if getattr(sys, 'frozen', False):
+    # The application is running as a bundled executable
+        app_path = sys.executable
+        p = Path(app_path).parents[1]
+
+    else:
+        # The application is running as a standard Python script
+        app_path = os.path.dirname(os.path.abspath(__file__))
+        p = Path(app_path)
+    
+    application_path = p.joinpath('Outputs/')
+    edit_file_path = os.path.join(application_path, 'editor_notes.txt')
+    
+    f = open(edit_file_path, 'w')
     f.write(editor_notes)
     f.flush()
     
@@ -38,7 +66,21 @@ def seo():
     keywords = data.get('keywords', [])
     draft_received = data.get('draft', '')
     seoNotes = seo_notes(draft_received, keywords)
-    f = open(os.path.realpath(os.path.join(os.path.dirname(__file__), 'Outputs', 'seo_notes.txt')), 'w')
+    
+    if getattr(sys, 'frozen', False):
+    # The application is running as a bundled executable
+        app_path = sys.executable
+        p = Path(app_path).parents[1]
+
+    else:
+        # The application is running as a standard Python script
+        app_path = os.path.dirname(os.path.abspath(__file__))
+        p = Path(app_path)
+    
+    application_path = p.joinpath('Outputs/')
+    seo_file_path = os.path.join(application_path, 'seo_notes.txt')
+    
+    f = open(seo_file_path, 'w')
     f.write(seoNotes)
     f.flush()
     
@@ -49,7 +91,21 @@ def photo():
     data = request.get_json()
     draft_received = data.get('draft', '')
     photoNotes = photo_suggestions(draft_received)
-    f = open(os.path.realpath(os.path.join(os.path.dirname(__file__), 'Outputs', 'photos.txt')), 'w')
+    
+    if getattr(sys, 'frozen', False):
+    # The application is running as a bundled executable
+        app_path = sys.executable
+        p = Path(app_path).parents[1]
+
+    else:
+        # The application is running as a standard Python script
+        app_path = os.path.dirname(os.path.abspath(__file__))
+        p = Path(app_path)
+    
+    application_path = p.joinpath('Outputs/')
+    photo_file_path = os.path.join(application_path, 'photos.txt')
+    
+    f = open(photo_file_path, 'w')
     f.write(photoNotes)
     f.flush()
     
@@ -63,7 +119,21 @@ def prod():
     seo_received = data.get('seo', '')
     photo_received = data.get('photo', '')
     final_output = final_blog_post(draft_received, edit_received, seo_received, photo_received)
-    f = open(os.path.realpath(os.path.join(os.path.dirname(__file__), 'Outputs', 'final_blog_post.txt')), 'w')
+    
+    if getattr(sys, 'frozen', False):
+    # The application is running as a bundled executable
+        app_path = sys.executable
+        p = Path(app_path).parents[1]
+    
+    else:
+        # The application is running as a standard Python script
+        app_path = os.path.dirname(os.path.abspath(__file__))
+        p = Path(app_path)
+    
+    application_path = p.joinpath('Outputs/')
+    final_file_path = os.path.join(application_path, 'final_blog_post.txt')
+    
+    f = open(final_file_path, 'w')
     f.write(final_output)
     f.flush()
     
