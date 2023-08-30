@@ -2,7 +2,7 @@
 
 ## Overview
 
-WritingGPT is a powerful web application that harnesses OpenAI's GPT-4 to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.
+WritingGPT is a powerful web application that harnesses OpenAI's GPT API to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.
 
 ## Features
 
@@ -22,37 +22,70 @@ WritingGPT is a powerful web application that harnesses OpenAI's GPT-4 to genera
 
 ### Installation
 
-1. Clone the repository:
+1. In the terminal, clone the repository:
 
     ```bash
     git clone https://github.com/khareesmith/WritingGPT.git
     ```
 
-2. Insert your OpenAI API key to every file in the "Writingteam" directory:
+2. Insert your OpenAI API key into the config.json file:
 
-    ```bash
-    openai.api_key = 'ENTER API KEY HERE'
+    ```json
+    {
+    "API_KEY": "YOUR_API_KEY_HERE"
+    }
     ```
 
-3. Run the program:
+3. Install the requirements for the application:
 
     ```bash
-    python main.py
+    pip install -r requirements.txt
     ```
+
+    or
+
+    ```bash
+    pip3 install -r requirements.txt
+    ```
+
+4. Run the application:
+
+    ```bash
+    python app.py
+    ```
+
+    or
+
+    ```bash
+    python3 app.py
+    ```
+5. Open browser to http://127.0.0.1:5000/ to view the application
+
+OPTIONAL (Building the Application to run quickly)
+
+6. Rebuild the application's spec file with pyinstaller
+
+    ```bash
+    pyinstaller app.spec
+    ```
+
+7. Navigate to the 'dist' folder and:
+
+    - (WINDOWS ONLY) Double-click the "run_app.bat" file
+
+    - (MACS ONLY) Double-click the "WGPT" file and then double-click the "Open Browser" application
 
 ## Usage
 
 The WritingGPT application allows you to explore creative combinations and unique content. Here's a step-by-step guide:
 
-1. **Before Running**: Add your personal flair to "style.txt" in the "Inputs" folder 🎩. Want to mimic your style? Include a sample!
-2. **Running the Program**: 
+1. **Running the Program**: 
    - Enter the topic for the blog post 🎯.
    - Include keywords, separated by commas ( , ) for specificity 🔍.
-   - Select the writer type. Mix and match to create exciting content. An album review by a Music writer 🎵? A history of baseball by a Tech writer 💻? Explore!
-3. **Editing Phase**: Select an editor to refine your masterpiece.
-4. **Finalization**: The program completes the rest, including photo research and SEO expertise, delivering the final blog post within the "Outputs" folder 🎁.
+   - Select the writer and editor type. Mix and match to create exciting content. An album review by a Music writer 🎵? A history of baseball by a Tech writer 💻? Explore!
+2. **Finalization**: The program completes the rest, including editing, photo research, SEO expertise, delivering the final blog post to the page and within the "Outputs" folder 🎁.
 
-### Writer Types
+### Writer/Editor Types
 
 - General (Versatile)
 - Food 🍽️ (Great for recipes, restaurants)
@@ -62,10 +95,13 @@ The WritingGPT application allows you to explore creative combinations and uniqu
 - Entertainment 🎥 (Movies, TV, pop culture)
 - Fashion 👠 (High fashion to everyday clothing)
 - Sports 🏈 (American and International sports)
+- Travel 🌎 (Travel guide to new destinations)
+- Photography 📷 (A good blog is worth 1,000 photos)
+- Health and Fitness ⚕️💪🏽 (Getting fit and staying healthy)
 
 ### Pro Tip
 
-You can even pair different writer and editor types to craft unique articles. A Gaming writer and a Tech editor for a cutting-edge game review? Why not! Enter "avail_types" to see all available options.
+Pair a different writer and editor types to craft unique articles. A Gaming writer and a Tech editor for a cutting-edge game review? Why not!
 
 ## Contributing
 
