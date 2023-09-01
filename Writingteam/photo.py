@@ -42,6 +42,7 @@ def photo_suggestions(draft):
     print("Generating photos to be included... \n")
 
     # Generate the photo researcher's notes using OpenAI
+    MODEL = config['GPT_MODEL']
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=conversation

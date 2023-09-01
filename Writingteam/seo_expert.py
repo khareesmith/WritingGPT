@@ -46,6 +46,7 @@ def seo_notes(draft, keywords):
     print("Generating notes for SEO. \n")
 
     # Generate the SEO's notes using OpenAI
+    MODEL = config['GPT_MODEL']
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=conversation

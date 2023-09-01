@@ -90,6 +90,11 @@ async function writeTeam(event) {
         // Display the received draft on the webpage.
         document.getElementById("finaloutput").innerText = finalresult.final;
 
+        const down_draft = document.createElement("button")
+        down_draft.innerText = "Download Draft"
+        down_draft.setAttribute("class", "btn btn-primary")
+        document.getElementById("draftbody").appendChild(down_draft)
+
     } catch (error) {
         // Handle any errors
         console.error("There was a problem with the fetch operation:", error);

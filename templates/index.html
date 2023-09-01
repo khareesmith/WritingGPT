@@ -6,21 +6,21 @@
 
 {% block body %}
 
-<div class="container-fluid">
-    <h1 class="display-3">🤖 WritingGPT: The A.I. Generated Writing Team 🤖</h1>
+<div class="container">
+    <h1 class="display-3">🤖 WGPT: An A.I. Generated Writing Team 🤖</h1>
 
-    <p class="desc">WritingGPT is a powerful web application that harnesses OpenAI's GPT-3.5 Turbo to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.</p>
+    <p class="desc">WGPT (WritingGPT) is a powerful web application that harnesses OpenAI's GPT-4 and GPT-3.5 Turbo to generate, edit, and optimize articles and blog posts. Choose from specialized writing teams tailored to various topics, such as tech 🧪, fashion 👗, or sports ⚽. From drafting to final edits, including SEO considerations and image research, WritingGPT provides a comprehensive solution for content creation.</p>
 
-    <form action="/draft" method="POST">
+    <form class="form" action="/draft" method="POST">
 
         <div class="form-group">
-            <label for="posttopic">Topic</label>
+            <label for="posttopic" class="label">Topic</label>
             <input type="text" class="form-control" id="posttopic" aria-describedby="topicHelp">
             <small id="topicHelp" class="form-text text-muted">Input the topic of the blog post/article above.</small>
         </div>
 
         <div class="form-group">
-            <label for="postkeywords">Keywords</label>
+            <label for="postkeywords" class="label">Keywords</label>
             <input type="text" class="form-control" id="postkeywords" aria-describedby="keyHelp">
             <small id="keyHelp" class="form-text text-muted">Input the keywords to influence the post, separated by commas.</small>
         </div>
@@ -28,7 +28,7 @@
         <div class="row typeRow">
 
             <div class="form-group col">
-                <label for="postkeywords">Copywriter Type</label>
+                <label for="postkeywords" class="label">Copywriter Type</label>
                 
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="writerTypeRadio" id="generalType" value="general" checked>
@@ -111,7 +111,7 @@
 
             <div class="form-group col">
 
-                <label for="postkeywords">Editor Type</label>
+                <label for="postkeywords" class="label">Editor Type</label>
 
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="editorTypeRadio" id="generalType" value="general" checked>
@@ -199,21 +199,21 @@
     </form>
 
     <div class="row">
-        <div class="col d-flex justify-content-around">
+        <div class="col col-lg-6 d-flex justify-content-around">
             <div class="card" style="width: 40rem">
-                <img src="{{url_for('static', filename='img/draft.jpg')}}" class="card-img-top" alt="...">
-                <div class="card-body scroll">
-                    <h5 class="card-title">Draft Post</h5>
-                    <p class="card-text" id='output'>The draft will be inserted here after hitting "Submit"</p>
+                <!-- <img src="{{url_for('static', filename='img/draft.jpg')}}" class="card-img-top" alt="..."> -->
+                <h5 class="card-title display-4">Draft Post</h5>
+                <div class="card-body scroll" id="draftbody">
+                    <p class="card-text" id='output'>The Draft will be inserted here after hitting "Submit"</p>
                 </div>
             </div>
         </div>
     
-        <div class="col d-flex justify-content-around">
+        <div class="col col-lg-6 d-flex justify-content-around">
             <div class="card" style="width: 40rem">
-                <img src="{{url_for('static', filename='img/editor.jpg')}}" class="card-img-top" alt="...">
+                <!-- <img src="{{url_for('static', filename='img/editor.jpg')}}" class="card-img-top" alt="..."> -->
+                <h5 class="card-title display-4">Editor Notes</h5>
                 <div class="card-body scroll">
-                    <h5 class="card-title">Editor Notes</h5>
                     <p class="card-text" id='editoutput'>The Editor's notes will be inserted here after the draft is generated.</p>
                 </div>
             </div>
@@ -221,22 +221,21 @@
     </div>
     
     <div class="row">
-
-        <div class="col d-flex justify-content-around">
+        <div class="col col-lg-6 d-flex justify-content-around">
             <div class="card" style="width: 40rem">
-                <img src="{{url_for('static', filename='img/seo.jpg')}}" class="card-img-top" alt="...">
+                <!-- <img src="{{url_for('static', filename='img/seo.jpg')}}" class="card-img-top" alt="..."> -->
+                <h5 class="card-title display-4">SEO Notes</h5>
                 <div class="card-body scroll">
-                    <h5 class="card-title">SEO Notes</h5>
                     <p class="card-text" id='seooutput'>The SEO Expert's notes will be inserted here after the Editor's notes are completed.</p>
                 </div>
             </div>
         </div>
 
-        <div class="col d-flex justify-content-around">
+        <div class="col col-lg-6 d-flex justify-content-around">
             <div class="card" style="width: 40rem">
-                <img src="{{url_for('static', filename='img/photo.jpg')}}" class="card-img-top" alt="...">
+                <!-- <img src="{{url_for('static', filename='img/photo.jpg')}}" class="card-img-top" alt="..."> -->
+                <h5 class="card-title display-4">Photo Suggestions</h5>
                 <div class="card-body scroll">
-                    <h5 class="card-title">Photo Suggestions</h5>
                     <p class="card-text" id='photooutput'>The Photo Researcher's suggestions will be appear here after the SEO Expert's guidance.</p>
                 </div>
             </div>
@@ -248,9 +247,9 @@
 
         <div class="col d-flex justify-content-around">
             <div class="card" style="width: 40rem">
-                <img src="{{url_for('static', filename='img/final.jpg')}}" class="card-img-top" alt="...">
+                <!-- <img src="{{url_for('static', filename='img/final.jpg')}}" class="card-img-top" alt="..."> -->
+                <h5 class="card-title display-4">Final Post</h5>
                 <div class="card-body scroll">
-                    <h5 class="card-title">Final Post</h5>
                     <p class="card-text" id='finaloutput'>The final blog post will be here after all information has been considered.</p>
                 </div>
             </div>
@@ -259,7 +258,5 @@
     </div>
 
 </div>
-
-
 
 {% endblock %}

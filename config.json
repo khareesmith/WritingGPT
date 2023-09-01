@@ -1,3 +1,6 @@
 {
-    "API_KEY": "YOUR_API_KEY_HERE"
+    "API_KEY": "",
+    "GPT_MODEL": "gpt-3.5-turbo",
+    "COPY_TEMP": 0.5,
+    "EDIT_TEMP": 0.5
 }

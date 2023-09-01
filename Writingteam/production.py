@@ -55,8 +55,9 @@ def final_blog_post(draft, editor_notes, seo_notes, photo_suggestions):
     print("Generating Final Blog Post... \n")
 
     # Generate the suggestions using OpenAI
+    MODEL = config['GPT_MODEL']
     response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo-16k",
+      model=MODEL,
       messages=conversation
     )
 
