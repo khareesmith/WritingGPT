@@ -30,7 +30,7 @@ WritingGPT is a robust web application powered by Flask and integrated with Open
 
 2. **Add OpenAI API Key**:
 
-    Edit `config.json` to insert your API key:
+    Edit `config.json` with a text/code editor to insert your API key:
 
     ```json
     {
