@@ -6,7 +6,7 @@ from pathlib import Path
 
 app = Flask(__name__)
 
-@app.route('/draft', methods=['POST'])
+@app.route('/draft', methods=['POST', 'GET'])
 def draft():
     data = request.get_json()
     writerType = data.get('writerType', '')
@@ -53,7 +53,7 @@ def edit():
     
     application_path = p.joinpath('Outputs/')
     edit_file_path = os.path.join(application_path, 'editor_notes.txt')
-    
+    print('Writing edits to ' + edit_file_path)
     f = open(edit_file_path, 'w')
     f.write(editor_notes)
     f.flush()
@@ -79,7 +79,7 @@ def seo():
     
     application_path = p.joinpath('Outputs/')
     seo_file_path = os.path.join(application_path, 'seo_notes.txt')
-    
+    print('Writing seo notes to ' + seo_file_path)
     f = open(seo_file_path, 'w')
     f.write(seoNotes)
     f.flush()
@@ -104,7 +104,7 @@ def photo():
     
     application_path = p.joinpath('Outputs/')
     photo_file_path = os.path.join(application_path, 'photos.txt')
-    
+    print('Writing photo suggestions to ' + photo_file_path)
     f = open(photo_file_path, 'w')
     f.write(photoNotes)
     f.flush()
@@ -132,7 +132,7 @@ def prod():
     
     application_path = p.joinpath('Outputs/')
     final_file_path = os.path.join(application_path, 'final_blog_post.txt')
-    
+    print('Writing final post/article to ' + final_file_path)
     f = open(final_file_path, 'w')
     f.write(final_output)
     f.flush()

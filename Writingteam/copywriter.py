@@ -43,10 +43,18 @@ def draft_blog_post(writerType, topic, keywords):
     
 
     # Combine topic, keywords, and system message into a conversation. User style is taken from a text file.
+    tone = config["TONE"]
+    article = config["TYPE"]
+    if article == 'article':
+        article = 'an article'
+    elif article == 'blog':
+        article = 'a blog post'
+    
     conversation = [
         {"role": "system", "content": f"{system_message}"},
-        {"role": "user", "content": f"Please write a blog post about {topic}."},
-        {"role": "user", "content": f"The keywords I want to include are {', '.join(keywords)}. Keep the keyword presence causal and natural and do not stuff them into the article/post."},
+        {"role": "user", "content": f"Please write {article} about {topic}."},
+        {"role": "user", "content": f"Use a {tone} tone for the writing. Combine this tone with your persona."},
+        {"role": "user", "content": f"The keywords to include are {', '.join(keywords)}. Keep the keyword presence causal and natural and do not stuff them into the article/post."},
         {"role": "user", "content": f"Follow your persona as closely as possible when making writing decisions, but remember to be professional. DO NOT say things like 'as X persona..' or 'as a copywriter for x..'."}
     ]
     

@@ -90,9 +90,11 @@ async function writeTeam(event) {
         // Display the received draft on the webpage.
         document.getElementById("finaloutput").innerText = finalresult.final;
 
-        const down_draft = document.createElement("button")
+        const down_draft = document.createElement("a")
         down_draft.innerText = "Download Draft"
         down_draft.setAttribute("class", "btn btn-primary")
+        down_draft.setAttribute("href", "../../Outputs/blog_post_draft.txt")
+        down_draft.setAttribute("download", "")
         document.getElementById("draftbody").appendChild(down_draft)
 
     } catch (error) {

@@ -58,9 +58,11 @@ def edit_blog_post(draft, editor_type):
         system_message = "You are a skilled editor for a publication that covers many areas."
 
     # Construct a conversation with the system message and the blog post draft
+    TONE = config['TONE']
     conversation = [
         {"role": "system", "content": system_message},
         {"role": "user", "content": f"Please review the following blog post and provide suggestions and tips for improvement: {draft}. Please provide only the notes/suggestions and NEVER repeat the blog post or article. You can reference sections, but do not repeat what is written in the draft."},
+        {"role": "user", "content": f"This was the requested tone for the writing: {TONE}. Do not make any notes pertaining to the tone."},
         {"role": "user", "content": f"DO NOT say things like 'as X persona..' or 'as an editor for x..'"}
     ]
     

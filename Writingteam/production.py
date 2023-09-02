@@ -49,7 +49,7 @@ def final_blog_post(draft, editor_notes, seo_notes, photo_suggestions):
         {"role": "user", "content": f"Use these notes from the Editor: {editor_notes}. Try to incorporate all notes that better the post as a whole."},
         {"role": "user", "content": f"Use these notes from the SEO Exprt: {seo_notes}. Make changes to the post as necessary to fit SEO requirements."},
         {"role": "user", "content": f"Use these notes from the Photo Researcher: {photo_suggestions}. If possible, include where each photo should be placed within the final post after the sentence or paragraph that it is relevant for."},
-        {"role": "system", "content": f"While you trust your team to create and gather content, it is your job to create the best experience and you are free to not incorporate every note/suggestion."}
+        {"role": "user", "content": f"While you trust your team to create and gather content, it is your job to create the best experience and you are free to not incorporate every note/suggestion."}
     ]
     
     print("Generating Final Blog Post... \n")
